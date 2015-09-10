@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.com.bemobi.medescope.sample" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:name="br.com.bemobi.medescope.sample.AppApplication">
+
+        <activity
+            android:name="br.com.bemobi.medescope.sample.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <receiver
+            android:name="br.com.bemobi.medescope.sample.receiver.BemobiDownloadReceiver"
+            android:exported="true">
+            <intent-filter >
+                <action android:name="br.com.bemobi.medescope.ACTION_BROADCAST_FINISH_WITH_SUCCESS"/>
+                <action android:name="br.com.bemobi.medescope.ACTION_BROADCAST_FINISH_WITH_ERROR"/>
+            </intent-filter>
+
+        </receiver>
+    </application>
+
+</manifest>
