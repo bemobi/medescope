@@ -26,7 +26,7 @@ import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_DOW
  */
 public class DMDownloadService implements DownloadService {
 
-    public static final String TAG = DMDownloadService.class.getSimpleName();
+    private static final String TAG = DMDownloadService.class.getSimpleName();
     private static DMDownloadService instance;
     private static DownloadManager downloadManager;
     private DMRepository repository;

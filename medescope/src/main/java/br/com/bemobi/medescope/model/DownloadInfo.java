@@ -10,21 +10,21 @@ import br.com.bemobi.medescope.constant.DownloadInfoStatusConstants;
  */
 public class DownloadInfo implements Parcelable{
 
-    int status;
+    private int status;
 
-    int reason;
+    private int reason;
 
-    String filename;
+    private String filename;
 
-    String localURI;
+    private String localURI;
 
-    long lastModified;
+    private long lastModified;
 
-    long downloadedSoFar;
+    private long downloadedSoFar;
 
-    long totalSize;
+    private long totalSize;
 
-    int progress;
+    private int progress;
 
     public DownloadInfo() {
     }

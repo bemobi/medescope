@@ -1,11 +1,4 @@
 <resources>
     <string name="app_name">DownloadSample</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
-    <!-- Log's -->
-    <bool name="mcare_debug_log">true</bool>
-    <bool name="mcare_detailed_log">true</bool>
-    <bool name="mcare_error_log">true</bool>
 </resources>

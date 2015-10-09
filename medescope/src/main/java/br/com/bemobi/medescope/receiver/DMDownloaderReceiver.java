@@ -14,7 +14,7 @@ import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_DOW
  * Created by bruno.costa on 26/06/15.
  */
 public class DMDownloaderReceiver extends BroadcastReceiver {
-    public static final String TAG = DMDownloaderReceiver.class.getSimpleName();
+    private static final String TAG = DMDownloaderReceiver.class.getSimpleName();
 
     public DMDownloaderReceiver() {
     }

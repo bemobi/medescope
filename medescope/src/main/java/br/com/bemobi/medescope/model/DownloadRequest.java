@@ -11,14 +11,14 @@ import java.util.Map;
  */
 public class DownloadRequest implements Serializable {
 
-    String id;
-    String uri;
-    String fileName;
-    String downloadName;
-    String downloadDescription;
-    String clientPayload;
-    boolean shouldDownloadOnlyInWifi;
-    Map<String, String> customHeaders;
+    private String id;
+    private String uri;
+    private String fileName;
+    private String downloadName;
+    private String downloadDescription;
+    private String clientPayload;
+    private boolean shouldDownloadOnlyInWifi;
+    private Map<String, String> customHeaders;
 
     public DownloadRequest() {
         this.customHeaders = new HashMap<>();

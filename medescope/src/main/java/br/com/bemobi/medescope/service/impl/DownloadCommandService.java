@@ -34,14 +34,14 @@ import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_SER
  */
 public class DownloadCommandService extends Service implements DownloadCommand {
 
-    public static final String TAG = DownloadCommandService.class.getSimpleName();
+    private static final String TAG = DownloadCommandService.class.getSimpleName();
 
-    public static final String ACTION_ENQUEUE = "br.com.bemobi.medescope.ACTION_ENQUEUE";
-    public static final String ACTION_CANCEL = "br.com.bemobi.medescope.ACTION_CANCEL";
-    public static final String ACTION_FINISH = "br.com.bemobi.medescope.ACTION_FINISH";
-    public static final String ACTION_NOTIFICATION_CLICK = "br.com.bemobi.medescope.ACTION_NOTIFICATION_CLICK";
-    public static final String ACTION_REGISTER_FOR_STATUS = "br.com.bemobi.medescope.ACTION_REGISTER_FOR_STATUS";
-    public static final String ACTION_UNREGISTER_FOR_STATUS = "br.com.bemobi.medescope.ACTION_UNREGISTER_FOR_STATUS";
+    private static final String ACTION_ENQUEUE = "br.com.bemobi.medescope.ACTION_ENQUEUE";
+    private static final String ACTION_CANCEL = "br.com.bemobi.medescope.ACTION_CANCEL";
+    private static final String ACTION_FINISH = "br.com.bemobi.medescope.ACTION_FINISH";
+    private static final String ACTION_NOTIFICATION_CLICK = "br.com.bemobi.medescope.ACTION_NOTIFICATION_CLICK";
+    private static final String ACTION_REGISTER_FOR_STATUS = "br.com.bemobi.medescope.ACTION_REGISTER_FOR_STATUS";
+    private static final String ACTION_UNREGISTER_FOR_STATUS = "br.com.bemobi.medescope.ACTION_UNREGISTER_FOR_STATUS";
 
     private DownloadService downloadService;
 

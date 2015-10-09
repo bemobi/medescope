@@ -14,8 +14,8 @@ import br.com.bemobi.medescope.service.DownloadService;
  */
 public class DMIntentService extends IntentService {
 
-    public static final String ACTION_DM_FINISH = "br.com.bemobi.medescope.ACTION_DM_FINISH";
-    public static final String ACTION_DM_NOTIFICATION_CLICKED = "br.com.bemobi.medescope.ACTION_DM_NOTIFICATION_CLICKED";
+    private static final String ACTION_DM_FINISH = "br.com.bemobi.medescope.ACTION_DM_FINISH";
+    private static final String ACTION_DM_NOTIFICATION_CLICKED = "br.com.bemobi.medescope.ACTION_DM_NOTIFICATION_CLICKED";
 
     public DMIntentService() {
         super(DMIntentService.class.getName());

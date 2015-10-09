@@ -73,7 +73,7 @@ public class DMRepository {
         return mapIdsDMToClient.get(dmDownloadId);
     }
 
-    public void loadMaps(){
+    private void loadMaps(){
         String mapIdsLibtoDMStr = PreferencesUtils.getStringPreference(mContext.getApplicationContext(), DownloadConstants.DM_STRING_IDS_LIB_TO_DMIDS_MAP_PREF, "");
         if(!TextUtils.isEmpty(mapIdsLibtoDMStr)) {
             Gson gson = new Gson();
@@ -91,7 +91,7 @@ public class DMRepository {
         }
     }
 
-    public void persistMaps(){
+    private void persistMaps(){
         PreferencesUtils.savePreference(mContext.getApplicationContext(), DownloadConstants.DM_STRING_IDS_LIB_TO_DMIDS_MAP_PREF, new Gson().toJson(mapIdsClientToDM));
         PreferencesUtils.savePreference(mContext.getApplicationContext(), DownloadConstants.DM_STRING_IDS_DMIDS_TO_LIB_MAP_PREF, new Gson().toJson(mapIdsDMToClient));
     }

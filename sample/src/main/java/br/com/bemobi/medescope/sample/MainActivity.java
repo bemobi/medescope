@@ -23,21 +23,21 @@ import br.com.bemobi.medescope.exception.PathNotFoundException;
 
 public class MainActivity extends ActionBarActivity {
 
-    public static final String TAG = MainActivity.class.getSimpleName();
-    public static final String FILE_PATH = "FILE.zip";
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String FILE_PATH = "FILE.zip";
 
-    String FILE_5MB = "http://download.thinkbroadband.com/5MB.zip";
-    String FILE_10MB = "http://download.thinkbroadband.com/10MB.zip";
-    String FILE_20MB = "http://download.thinkbroadband.com/20MB.zip";
-    String FILE_50MB = "http://download.thinkbroadband.com/50MB.zip";
-    String FILE_100MB = "http://download.thinkbroadband.com/100MB.zip";
-    String [] files = {FILE_5MB, FILE_10MB, FILE_20MB, FILE_50MB, FILE_100MB};
+    private String FILE_5MB = "http://download.thinkbroadband.com/5MB.zip";
+    private String FILE_10MB = "http://download.thinkbroadband.com/10MB.zip";
+    private String FILE_20MB = "http://download.thinkbroadband.com/20MB.zip";
+    private String FILE_50MB = "http://download.thinkbroadband.com/50MB.zip";
+    private String FILE_100MB = "http://download.thinkbroadband.com/100MB.zip";
+    private String [] files = {FILE_5MB, FILE_10MB, FILE_20MB, FILE_50MB, FILE_100MB};
 
-    String downloadName = FILE_5MB;
+    private String downloadName = FILE_5MB;
 
-    Spinner spinner;
-    ProgressBar progressBar;
-    ArrayAdapter<String> adapter;
+    private Spinner spinner;
+    private ProgressBar progressBar;
+    private ArrayAdapter<String> adapter;
 
     private TextView textStatus;
     private TextView textAction;
@@ -193,7 +193,7 @@ public class MainActivity extends ActionBarActivity {
         hideProgress();
     }
 
-    public boolean isLargeFile(String selected) {
+    private boolean isLargeFile(String selected) {
         return FILE_20MB.equals(selected) || FILE_50MB.equals(selected) || FILE_100MB.equals(selected);
     }
 }
