@@ -31,16 +31,14 @@ public class IntentLogger {
 
         if (bundle != null) {
             Set<String> keys = bundle.keySet();
-            Iterator<String> it = keys.iterator();
-            while (it.hasNext()) {
-                String key = it.next();
+            for (String key : keys) {
                 Object object = bundle.get(key);
 
                 if (object != null) {
                     String[] values = object.toString().split(", ");
 
-                    for (int i = 0; i < values.length; i++) {
-                        Logger.debug(TAG, feature, String.format("            [%s] = %s", key, values[i]));
+                    for (String value : values) {
+                        Logger.debug(TAG, feature, String.format("            [%s] = %s", key, value));
                     }
                 }
 

@@ -1,7 +1,7 @@
 package br.com.bemobi.medescope.constant;
 
 /**
- * Created by bruno.costa on 26/06/15.
+ * Created by bkosawa on 26/06/15.
  */
 public class DownloadConstants {
 //    public static final String EXTRA_STRING_ID = "EXTRA_STRING_ID";
@@ -21,8 +21,8 @@ public class DownloadConstants {
     public static final String EXTRA_INT_REASON_KEY = "EXTRA_INT_REASON_KEY";
 
     public static final String DATA_MAP_PREF = "br.com.bemobi.download.DATA_MAP_PREF";
-    public static final String DM_STRING_IDS_LIB_TO_DMIDS_MAP_PREF = "br.com.bemobi.medescope.DM_STRING_IDS_LIB_TO_DMIDS_MAP_PREF";
-    public static final String DM_STRING_IDS_DMIDS_TO_LIB_MAP_PREF = "br.com.bemobi.medescope.DM_STRING_IDS_DMIDS_TO_LIB_MAP_PREF";
+    public static final String DM_STRING_IDS_LIB_TO_DMIDS_MAP_PREF = "br.com.bemobi.medescope.DM_STRING_IDS_LIB_TO_DM_IDS_MAP_PREF";
+    public static final String DM_STRING_IDS_DMIDS_TO_LIB_MAP_PREF = "br.com.bemobi.medescope.DM_STRING_IDS_DM_IDS_TO_LIB_MAP_PREF";
 
     public static final String LOG_FEATURE_DOWNLOAD = "BEMOBI_DOWNLOAD_LIB";
     public static final String LOG_FEATURE_SERVICE_LIFECYCLE = "SERVICE_LIFECYCLE";

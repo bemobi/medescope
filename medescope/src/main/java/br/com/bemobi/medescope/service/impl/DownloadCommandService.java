@@ -30,7 +30,7 @@ import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_DOW
 import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_SERVICE_LIFECYCLE;
 
 /**
- * Created by bruno.costa on 26/06/15.
+ * Created by bkosawa on 26/06/15.
  */
 public class DownloadCommandService extends Service implements DownloadCommand {
 
@@ -185,7 +185,12 @@ public class DownloadCommandService extends Service implements DownloadCommand {
 
     @Override
     public void enqueue(DownloadRequest downloadRequest) {
-        if (downloadRequest == null || !downloadRequest.isValid()) {
+        if (downloadRequest == null) {
+            Logger.error(TAG, DownloadConstants.LOG_FEATURE_DOWNLOAD, "Null download object param");
+            return;
+        }
+
+        if( !downloadRequest.isValid()) {
             Logger.error(TAG, DownloadConstants.LOG_FEATURE_DOWNLOAD, String.format("Invalid download object param: %s", downloadRequest.toString()));
             return;
         }

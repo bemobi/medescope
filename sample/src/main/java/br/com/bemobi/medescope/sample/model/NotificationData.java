@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * Created by bruno.costa on 30/06/15.
+ * Created by bkosawa on 30/06/15.
  */
 public class NotificationData {
 

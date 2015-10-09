@@ -20,7 +20,7 @@ import br.com.bemobi.medescope.model.DownloadRequest;
 import br.com.bemobi.medescope.service.impl.DownloadCommandService;
 
 /**
- * Created by bruno.costa on 26/06/15.
+ * Created by bkosawa on 26/06/15.
  */
 public class Medescope {
 

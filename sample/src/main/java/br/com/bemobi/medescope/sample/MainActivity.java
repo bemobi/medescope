@@ -156,9 +156,7 @@ public class MainActivity extends ActionBarActivity {
         try {
             originalFilePath = mMedescope.getDownloadDirectoryToRead(FILE_PATH);
             Log.d(TAG, "Original path: " + originalFilePath);
-        } catch (DirectoryNotMountedException e) {
-            e.printStackTrace();
-        } catch (PathNotFoundException e) {
+        } catch (DirectoryNotMountedException | PathNotFoundException e) {
             e.printStackTrace();
         }
 

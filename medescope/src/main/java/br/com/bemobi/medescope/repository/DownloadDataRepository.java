@@ -3,7 +3,7 @@ package br.com.bemobi.medescope.repository;
 import java.util.Map;
 
 /**
- * Created by bruno.costa on 02/07/15.
+ * Created by bkosawa on 02/07/15.
  */
 public interface DownloadDataRepository {
 

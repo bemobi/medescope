@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import br.com.bemobi.medescope.constant.DownloadInfoStatusConstants;
 
 /**
- * Created by bruno.costa on 30/06/15.
+ * Created by bkosawa on 30/06/15.
  */
 public class DownloadInfo implements Parcelable{
 

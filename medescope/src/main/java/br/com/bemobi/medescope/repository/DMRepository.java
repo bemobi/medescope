@@ -10,12 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.bemobi.medescope.constant.DownloadConstants;
-import br.com.bemobi.medescope.log.MapLogger;
-
-import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_DOWNLOAD_DATA_STATE;
 
 /**
- * Created by bruno.costa on 01/07/15.
+ * Created by bkosawa on 01/07/15.
  */
 public class DMRepository {
 
@@ -74,10 +71,10 @@ public class DMRepository {
     }
 
     private void loadMaps(){
-        String mapIdsLibtoDMStr = PreferencesUtils.getStringPreference(mContext.getApplicationContext(), DownloadConstants.DM_STRING_IDS_LIB_TO_DMIDS_MAP_PREF, "");
-        if(!TextUtils.isEmpty(mapIdsLibtoDMStr)) {
+        String mapIdsLibToDMStr = PreferencesUtils.getStringPreference(mContext.getApplicationContext(), DownloadConstants.DM_STRING_IDS_LIB_TO_DMIDS_MAP_PREF, "");
+        if(!TextUtils.isEmpty(mapIdsLibToDMStr)) {
             Gson gson = new Gson();
-            mapIdsClientToDM = gson.fromJson(mapIdsLibtoDMStr, new TypeToken<HashMap<String, Long>>(){}.getType());
+            mapIdsClientToDM = gson.fromJson(mapIdsLibToDMStr, new TypeToken<HashMap<String, Long>>(){}.getType());
         } else {
             mapIdsClientToDM = new HashMap<>();
         }

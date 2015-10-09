@@ -1,7 +1,7 @@
 package br.com.bemobi.medescope.exception;
 
 /**
- * Created by bruno.costa on 10/07/15.
+ * Created by bkosawa on 10/07/15.
  */
 public class DownloadBaseException extends Exception {
 

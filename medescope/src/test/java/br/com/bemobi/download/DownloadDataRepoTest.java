@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
- * Created by bruno.costa on 22/05/15.
+ * Created by bkosawa on 22/05/15.
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(emulateSdk = 18)

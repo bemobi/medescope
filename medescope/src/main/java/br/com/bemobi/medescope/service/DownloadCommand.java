@@ -6,7 +6,7 @@ import br.com.bemobi.medescope.model.DownloadRequest;
 import br.com.bemobi.medescope.model.DownloadInfo;
 
 /**
- * Created by bruno.costa on 30/06/15.
+ * Created by bkosawa on 30/06/15.
  */
 public interface DownloadCommand {
 

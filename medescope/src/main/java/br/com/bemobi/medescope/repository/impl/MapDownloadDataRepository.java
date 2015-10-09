@@ -10,15 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.bemobi.medescope.constant.DownloadConstants;
-import br.com.bemobi.medescope.log.MapLogger;
 import br.com.bemobi.medescope.repository.DownloadDataRepository;
 import br.com.bemobi.medescope.repository.PreferencesUtils;
 
-import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_DOWNLOAD_DATA_STATE;
-import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_SERVICE_LIFECYCLE;
-
 /**
- * Created by bruno.costa on 01/07/15.
+ * Created by bkosawa on 01/07/15.
  */
 public class MapDownloadDataRepository implements DownloadDataRepository {
 

@@ -10,7 +10,7 @@ import br.com.bemobi.medescope.repository.DMRepository;
 import br.com.bemobi.medescope.service.DownloadService;
 
 /**
- * Created by bruno.costa on 01/07/15.
+ * Created by bkosawa on 01/07/15.
  */
 public class DMIntentService extends IntentService {
 

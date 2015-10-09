@@ -11,7 +11,7 @@ import br.com.bemobi.medescope.service.impl.DMIntentService;
 import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_DOWNLOAD;
 
 /**
- * Created by bruno.costa on 26/06/15.
+ * Created by bkosawa on 26/06/15.
  */
 public class DMDownloaderReceiver extends BroadcastReceiver {
     private static final String TAG = DMDownloaderReceiver.class.getSimpleName();

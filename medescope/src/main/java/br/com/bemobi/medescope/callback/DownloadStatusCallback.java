@@ -1,7 +1,7 @@
 package br.com.bemobi.medescope.callback;
 
 /**
- * Created by bruno.costa on 08/07/15.
+ * Created by bkosawa on 08/07/15.
  */
 public interface DownloadStatusCallback {
     void onDownloadNotEnqueued(String downloadId);

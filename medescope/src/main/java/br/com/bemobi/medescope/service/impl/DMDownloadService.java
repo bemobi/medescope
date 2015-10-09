@@ -22,7 +22,7 @@ import br.com.bemobi.medescope.wrapper.impl.DMDownloadInfoWrapper;
 import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_DOWNLOAD;
 
 /**
- * Created by bruno.costa on 30/06/15.
+ * Created by bkosawa on 30/06/15.
  */
 public class DMDownloadService implements DownloadService {
 
@@ -140,8 +140,8 @@ public class DMDownloadService implements DownloadService {
                 String filename;
                 String localURI;
                 long lastModified;
-                long downloadedSoFar = 0;
-                long totalSize = 1;
+                long downloadedSoFar;
+                long totalSize;
                 int progress = 0;
 
                 if (cursor.moveToFirst()) {

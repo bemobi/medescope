@@ -1,7 +1,7 @@
 package br.com.bemobi.medescope.service;
 
 /**
- * Created by bruno.costa on 02/07/15.
+ * Created by bkosawa on 02/07/15.
  */
 public interface CommunicationService {
 

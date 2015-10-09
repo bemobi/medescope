@@ -19,7 +19,7 @@ import br.com.goncalves.pugnotification.notification.PugNotification;
 import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_DOWNLOAD;
 
 /**
- * Created by bruno.costa on 02/07/15.
+ * Created by bkosawa on 02/07/15.
  */
 public class BemobiDownloadReceiver extends BroadcastReceiver {
 
