@@ -13,10 +13,29 @@ compile 'br.com.bemobi.medescope:medescope:1.0.0'
 
 Usage
 --------
+To download a file.
+
 ```
-        Medescope mMedescope = Medescope.getInstance(this);
-        mMedescope.setApplicationName(getString(R.string.app_name));
-        mMedescope.subscribeStatus(this, "DOWNLOAD_ID", new DownloadStatusCallback() {
+        Medescope
+        .getInstance(this)
+            .enqueue("DOWNLOAD_ID",
+                "http://somefileiwanttodownload.com/file",
+                "file_name",
+                "Name that you appear on notification",
+                "{some:'samplejson'}"
+                );
+```
+
+Set an application name to be shown on notification bar.
+
+```
+        Medescope.getInstance(this).setApplicationName("My Application Name"));
+```
+
+Using a callback interface to simply response on your code.
+
+```
+        Medescope.getInstance(this).subscribeStatus(this, "DOWNLOAD_ID", new DownloadStatusCallback() {
             @Override
             public void onDownloadNotEnqueued(String downloadId) {
                 //TODO DO SOMETHING
@@ -48,6 +67,8 @@ Usage
             }
         });
 ```
+
+For more, check our sample.
 
 Contributing
 --------
