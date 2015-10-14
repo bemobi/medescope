@@ -8,7 +8,7 @@ Download
 
 Download grab via Gradle:
 ```groovy
-compile 'br.com.bemobi.medescope:medescope:1.0.0'
+compile 'br.com.bemobi:medescope:1.0.1-SNAPSHOT'
 ```
 
 Usage

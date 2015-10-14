@@ -8,8 +8,8 @@ android {
         applicationId "br.com.bemobi.medescope.sample"
         minSdkVersion 10
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode globalConfiguration.getAt("androidVersionCode")
+        versionName globalConfiguration.getAt("androidVersionName")
     }
     buildTypes {
         release {
