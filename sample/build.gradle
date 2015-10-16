@@ -4,6 +4,8 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.0"
 
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
     defaultConfig {
         applicationId "br.com.bemobi.medescope.sample"
         minSdkVersion 10
