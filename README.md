@@ -1,14 +1,16 @@
-Medescope Download Library
+Medescope Android Download Library
 =======
 
-This a is a ready to use library that encapsulate the Android Download Manager.
+This a is a ready-to-use library that encapsulate the Android Download Manager. Using an interface you can easily connect to your Activity or Fragment and used it. It runs on other process as an independent service. 
 
 Download
 --------
 
 Download grab via Gradle:
 ```groovy
-compile 'br.com.bemobi:medescope:1.0.1-SNAPSHOT'
+    dependencies{
+        compile 'br.com.bemobi:medescope:1.0.1
+    }
 ```
 
 Usage
