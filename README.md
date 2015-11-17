@@ -1,5 +1,6 @@
 Medescope Android Download Library
 =======
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Medescope%20Android%20Download%20Library-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2799)
 
 This a is a ready-to-use library that encapsulate the Android Download Manager. Using an interface you can easily connect to your Activity or Fragment and used it. It runs on other process as an independent service. 
 
