@@ -96,6 +96,11 @@ public class DownloadInfoReasonConstants {
     //public final static int REASON_ERROR_BLOCKED = 1010;
     public final static int ERROR_GENERIC_STORAGE_PROBLEM = 3010;
 
+    /**
+     * Value of COLUMN_REASON There is no permission to write on file.
+     */
+    public final static int ERROR_PERMISSION_NOT_GRANTED = 3011;
+
     public static String getDownloadReasonText(int reason) {
         String reasonStr = "";
 

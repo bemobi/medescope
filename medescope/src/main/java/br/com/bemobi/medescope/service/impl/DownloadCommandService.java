@@ -1,8 +1,10 @@
 package br.com.bemobi.medescope.service.impl;
 
+import android.Manifest;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -10,6 +12,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 
 import br.com.bemobi.medescope.constant.DownloadConstants;
@@ -185,12 +188,7 @@ public class DownloadCommandService extends Service implements DownloadCommand {
 
     @Override
     public void enqueue(DownloadRequest downloadRequest) {
-        if (downloadRequest == null) {
-            Logger.error(TAG, DownloadConstants.LOG_FEATURE_DOWNLOAD, "Null download object param");
-            return;
-        }
-
-        if( !downloadRequest.isValid()) {
+        if (downloadRequest == null || !downloadRequest.isValid()) {
             Logger.error(TAG, DownloadConstants.LOG_FEATURE_DOWNLOAD, String.format("Invalid download object param: %s", downloadRequest.toString()));
             return;
         }
@@ -219,6 +217,17 @@ public class DownloadCommandService extends Service implements DownloadCommand {
     private void enqueue(DownloadService downloadService, DownloadRequest downloadRequest){
         downloadService.cleanupId(downloadRequest.getId());
         downloadDataRepository.removeDownloadData(downloadRequest.getId());
+        downloadDataRepository.putDownloadData(downloadRequest.getId(), downloadRequest.getClientPayload());
+
+        if(!hasPermission()){
+            communicationService
+                    .sendFinishWithErrorBroadcastData(
+                            downloadRequest.getId(),
+                            DownloadInfoReasonConstants.ERROR_PERMISSION_NOT_GRANTED,
+                            downloadDataRepository.getDownloadData(downloadRequest.getId()));
+            return;
+        }
+
         boolean enqueued = downloadService.enqueue(
                         downloadRequest.getId(),
                         downloadRequest.getUri(),
@@ -229,7 +238,6 @@ public class DownloadCommandService extends Service implements DownloadCommand {
                         downloadRequest.shouldDownloadOnlyInWifi(),
                         downloadRequest.getCustomHeaders()
         );
-        downloadDataRepository.putDownloadData(downloadRequest.getId(), downloadRequest.getClientPayload());
         if (shouldStartSendProgressOnEnqueue(downloadRequest.getId())) {
             startProgressSender();
         }
@@ -237,10 +245,21 @@ public class DownloadCommandService extends Service implements DownloadCommand {
         if (!enqueued) {
             communicationService
                 .sendFinishWithErrorBroadcastData(
-                    downloadRequest.getId(),
-                    DownloadInfoReasonConstants.ERROR_GENERIC,
-                    downloadDataRepository.getDownloadData(downloadRequest.getId()));
+                        downloadRequest.getId(),
+                        DownloadInfoReasonConstants.ERROR_GENERIC,
+                        downloadDataRepository.getDownloadData(downloadRequest.getId()));
         }
+    }
+
+    private boolean hasPermission(){
+        int permission = ActivityCompat
+                .checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if(permission== PackageManager.PERMISSION_GRANTED){
+            return true;
+        }
+
+        return false;
     }
 
     private  boolean shouldStartSendProgressOnEnqueue(String enqueueDownloadId){
