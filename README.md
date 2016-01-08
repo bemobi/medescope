@@ -10,7 +10,7 @@ Download
 Download grab via Gradle:
 ```groovy
     dependencies{
-        compile 'br.com.bemobi:medescope:1.0.1
+        compile 'br.com.bemobi:medescope:1.1.0
     }
 ```
 
