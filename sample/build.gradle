@@ -27,6 +27,6 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.1.1'
     compile 'com.github.halysongoncalves:pugnotification:1.7.0'
     compile project(':medescope')
-    //compile 'br.com.bemobi:medescope:1.1.0-SNAPSHOT@aar'
+    //compile 'br.com.bemobi:medescope:1.1.1-SNAPSHOT@aar'
     compile 'com.google.code.gson:gson:2.4'
 }
