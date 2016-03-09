@@ -332,17 +332,21 @@ public class DownloadCommandService extends Service implements DownloadCommand {
             Logger.debug(TAG, LOG_FEATURE_SERVICE_LIFECYCLE, "ServiceHandler.handleMessage()");
             DownloadInfo lastSentDownloadInfo = null;
 
+            if (!downloadDataRepository.containsDownloadDataKey(downloadIdRegisteredToSendProgress)) {
+                communicationService.sendDownloadStatusNotEnqueue(downloadIdRegisteredToSendProgress);
+                isStartedSendProgress = false;
+            }
+
+            DownloadInfo downloadInfo = downloadService.getDownloadInfo(downloadIdRegisteredToSendProgress);
+            if (downloadInfo == null) {
+                communicationService.sendDownloadStatusNotEnqueue(downloadIdRegisteredToSendProgress);
+                isStartedSendProgress = false;
+            }
+
             while (!TextUtils.isEmpty(downloadIdRegisteredToSendProgress) && isStartedSendProgress) {
                 try {
-                    if (!downloadDataRepository.containsDownloadDataKey(downloadIdRegisteredToSendProgress)) {
-                        communicationService.sendDownloadStatusNotEnqueue(downloadIdRegisteredToSendProgress);
-                        isStartedSendProgress = false;
-                        break;
-                    }
 
-                    DownloadInfo downloadInfo = downloadService.getDownloadInfo(downloadIdRegisteredToSendProgress);
                     if (downloadInfo == null) {
-                        communicationService.sendDownloadStatusNotEnqueue(downloadIdRegisteredToSendProgress);
                         isStartedSendProgress = false;
                         break;
                     }
@@ -365,6 +369,8 @@ public class DownloadCommandService extends Service implements DownloadCommand {
                     lastSentDownloadInfo = downloadInfo;
 
                     Thread.sleep(300);
+
+                    downloadInfo = downloadService.getDownloadInfo(downloadIdRegisteredToSendProgress);
 
                 } catch (InterruptedException exception) {
                     Logger.error(TAG, DownloadConstants.LOG_FEATURE_DOWNLOAD_SEND_PROGRESS, "ERROR ON THREAD STATUS SENDER!!!!");

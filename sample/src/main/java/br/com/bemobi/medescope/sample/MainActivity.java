@@ -139,7 +139,6 @@ public class MainActivity extends ActionBarActivity {
                 textAction.setText("ACTION  FINISH WITH SUCCESS");
                 Log.d(TAG, "Received path: " + filePath);
                 checkFilePath(filePath);
-
                 hideProgress();
             }
 
