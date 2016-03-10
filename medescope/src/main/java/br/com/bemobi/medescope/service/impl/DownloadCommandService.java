@@ -276,18 +276,21 @@ public class DownloadCommandService extends Service implements DownloadCommand {
     @Override
     public void finishAction(String downloadId, DownloadInfo downloadInfo) {
         Logger.debug(TAG, DownloadConstants.LOG_FEATURE_DOWNLOAD, "Finish Action");
+        String downloadData = downloadDataRepository.getDownloadData(downloadId);
+
+        downloadDataRepository.removeDownloadData(downloadId);
+        downloadService.cleanupId(downloadId);
+
         if (downloadInfo != null) {
             if (downloadInfo.hasFinishedWithSuccess()) {
-                communicationService.sendFinishWithSuccessBroadcastData(downloadId, downloadInfo.getFilename(), downloadDataRepository.getDownloadData(downloadId));
+                communicationService.sendFinishWithSuccessBroadcastData(downloadId, downloadInfo.getFilename(), downloadData);
             } else if (downloadInfo.hasFinishedWithError()) {
-                communicationService.sendFinishWithErrorBroadcastData(downloadId, downloadInfo.getReason(), downloadDataRepository.getDownloadData(downloadId));
+                communicationService.sendFinishWithErrorBroadcastData(downloadId, downloadInfo.getReason(), downloadData);
             }
         } else {
             Logger.debug(TAG, DownloadConstants.LOG_FEATURE_DOWNLOAD, "Cancelled");
             communicationService.sendCancelled(downloadId);
         }
-        downloadDataRepository.removeDownloadData(downloadId);
-        downloadService.cleanupId(downloadId);
     }
 
     @Override
@@ -346,7 +349,8 @@ public class DownloadCommandService extends Service implements DownloadCommand {
             while (!TextUtils.isEmpty(downloadIdRegisteredToSendProgress) && isStartedSendProgress) {
                 try {
 
-                    if (downloadInfo == null) {
+                    if (downloadInfo == null
+                            || !downloadDataRepository.containsDownloadDataKey(downloadIdRegisteredToSendProgress)) {
                         isStartedSendProgress = false;
                         break;
                     }
