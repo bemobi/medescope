@@ -2,6 +2,7 @@ package br.com.bemobi.medescope.service.impl;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
@@ -62,6 +63,9 @@ public class DMDownloadService implements DownloadService {
 
     @Override
     public boolean enqueue(String downloadId, String uri, String fileName, String title, String description, String data, boolean shouldDownloadOnlyInWifi, Map<String, String> customHeaders) {
+        if( isDownloadManagerDeactivated(mContext) ){
+            return false;
+        }
         if (DownloadFileUtils.isExternalStorageWritable()) {
             DownloadManager.Request request;
             request = new DownloadManager.Request(Uri.parse(uri));
@@ -91,6 +95,14 @@ public class DMDownloadService implements DownloadService {
         }
 
         return false;
+    }
+
+    public boolean isDownloadManagerDeactivated(Context context){
+        int state = context.getPackageManager().getApplicationEnabledSetting("com.android.providers.downloads");
+
+        return state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED ||
+                state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER ||
+                state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_UNTIL_USED;
     }
 
     private void setAllowedNetworks(boolean shouldDownloadOnlyInWifi, DownloadManager.Request request) {
