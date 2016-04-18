@@ -66,7 +66,7 @@ public class DMIntentService extends IntentService {
                     }
                 }
 
-                if (downloadService.isDownloadManagerUiActivated()) {
+                if (downloadService.isDownloadManagerUiActivated() && downloadService.isDownloadManagerActivated()) {
                     downloadService.notificationClicked(downloadIds);
                 } else {
                     Log.w(TAG, "DownloadManager app disabled before trying to open the Download List screen! Aborting...");

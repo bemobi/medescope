@@ -44,7 +44,7 @@ public class DMDownloaderReceiver extends BroadcastReceiver {
 
             DownloadService downloadService = DMDownloadService.getInstance(context);
 
-            if (downloadService.isDownloadManagerUiActivated()) {
+            if (downloadService.isDownloadManagerUiActivated() && downloadService.isDownloadManagerActivated()) {
                 DMIntentService.actionNotificationClicked(context, downloadIds);
             } else {
                 Log.w(TAG, String.format("DownloadManager app disabled when receive %s event! Aborting...", action));

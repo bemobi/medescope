@@ -9,6 +9,7 @@ import br.com.bemobi.medescope.Medescope;
 import br.com.bemobi.medescope.constant.DownloadConstants;
 import br.com.bemobi.medescope.log.Logger;
 import br.com.bemobi.medescope.service.CommunicationService;
+import br.com.bemobi.medescope.service.DownloadService;
 
 /**
  * Created by bkosawa on 02/07/15.
@@ -100,7 +101,9 @@ public class BroadcastCommunicationService implements CommunicationService {
 
     @Override
     public void showDownloadQueue() {
-        if (DMDownloadService.getInstance(mContext).isDownloadManagerUiActivated()) {
+        DownloadService downloadService = DMDownloadService.getInstance(mContext);
+
+        if (downloadService.isDownloadManagerUiActivated() && downloadService.isDownloadManagerActivated()) {
             Intent i = new Intent();
             i.setAction(DownloadManager.ACTION_VIEW_DOWNLOADS);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
