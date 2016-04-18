@@ -4,6 +4,7 @@ import android.app.DownloadManager;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import br.com.bemobi.medescope.model.DownloadInfo;
 import br.com.bemobi.medescope.repository.DMRepository;
@@ -16,11 +17,11 @@ public class DMIntentService extends IntentService {
 
     private static final String ACTION_DM_FINISH = "br.com.bemobi.medescope.ACTION_DM_FINISH";
     private static final String ACTION_DM_NOTIFICATION_CLICKED = "br.com.bemobi.medescope.ACTION_DM_NOTIFICATION_CLICKED";
+    private static final String TAG = "DMIntentService";
 
     public DMIntentService() {
         super(DMIntentService.class.getName());
     }
-
 
     public static void actionFinish(Context context, long downloadId) {
         Intent intent = new Intent(context, DMIntentService.class);
@@ -64,9 +65,13 @@ public class DMIntentService extends IntentService {
                         downloadIds[i] = DMRepository.getInstance(getApplicationContext()).getClientId(ids[i]);
                     }
                 }
-                downloadService.notificationClicked(downloadIds);
+
+                if (downloadService.isDownloadManagerUiActivated()) {
+                    downloadService.notificationClicked(downloadIds);
+                } else {
+                    Log.w(TAG, "DownloadManager app disabled before trying to open the Download List screen! Aborting...");
+                }
             }
         }
-
     }
 }

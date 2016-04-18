@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import br.com.bemobi.medescope.service.DownloadService;
+import br.com.bemobi.medescope.service.impl.DMDownloadService;
 import br.com.bemobi.medescope.service.impl.DMIntentService;
 
 import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_DOWNLOAD;
@@ -40,7 +42,13 @@ public class DMDownloaderReceiver extends BroadcastReceiver {
                 downloadIds = intent.getLongArrayExtra(DownloadManager.EXTRA_NOTIFICATION_CLICK_DOWNLOAD_IDS);
             }
 
-            DMIntentService.actionNotificationClicked(context, downloadIds);
+            DownloadService downloadService = DMDownloadService.getInstance(context);
+
+            if (downloadService.isDownloadManagerUiActivated()) {
+                DMIntentService.actionNotificationClicked(context, downloadIds);
+            } else {
+                Log.w(TAG, String.format("DownloadManager app disabled when receive %s event! Aborting...", action));
+            }
         }
     }
 }

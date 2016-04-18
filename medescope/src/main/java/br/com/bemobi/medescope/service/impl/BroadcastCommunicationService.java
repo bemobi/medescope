@@ -3,6 +3,7 @@ package br.com.bemobi.medescope.service.impl;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import br.com.bemobi.medescope.Medescope;
 import br.com.bemobi.medescope.constant.DownloadConstants;
@@ -99,10 +100,13 @@ public class BroadcastCommunicationService implements CommunicationService {
 
     @Override
     public void showDownloadQueue() {
-        Intent i = new Intent();
-        i.setAction(DownloadManager.ACTION_VIEW_DOWNLOADS);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(i);
+        if (DMDownloadService.getInstance(mContext).isDownloadManagerUiActivated()) {
+            Intent i = new Intent();
+            i.setAction(DownloadManager.ACTION_VIEW_DOWNLOADS);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(i);
+        } else {
+            Log.w(TAG, "DownloadManager app disabled before trying to open the Download List screen. Abort!");
+        }
     }
-
 }
