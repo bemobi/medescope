@@ -2,6 +2,7 @@ package br.com.bemobi.medescope.service.impl;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -95,6 +96,11 @@ public class DMDownloadService implements DownloadService {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean isDownloadManagerActivated() {
+        return !this.isDownloadManagerDeactivated(mContext);
     }
 
     public boolean isDownloadManagerDeactivated(Context context){

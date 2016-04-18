@@ -13,6 +13,8 @@ public interface DownloadService {
 
     boolean enqueue(String downloadId, String uri, String fileName, String title, String description, String data, boolean shouldDownloadOnlyInWifi, Map<String, String> customHeaders);
 
+    boolean isDownloadManagerActivated();
+
     boolean cancel(String downloadId);
 
     void cleanupId(String downloadId);
