@@ -3,7 +3,7 @@ apply from: 'maven.gradle'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     def globalConfiguration = rootProject.extensions.getByName("ext")
 
