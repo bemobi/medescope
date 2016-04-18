@@ -29,6 +29,10 @@ import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_DOW
 public class DMDownloadService implements DownloadService {
 
     private static final String TAG = DMDownloadService.class.getSimpleName();
+
+    private static final String PACKAGE_DOWNLOAD_MANAGER = "com.android.providers.downloads";
+    private static final String PACKAGE_DOWNLOAD_MANAGER_UI = "com.android.providers.downloads.ui";
+
     private static DMDownloadService instance;
     private static DownloadManager downloadManager;
     private DMRepository repository;
@@ -99,13 +103,28 @@ public class DMDownloadService implements DownloadService {
     }
 
     @Override
+    public boolean isDownloadManagerUiActivated() {
+        return !this.isDownloadManagerUiDeactivated();
+    }
+
+    @Override
+    public boolean isDownloadManagerUiDeactivated(){
+        int state = mContext.getPackageManager().getApplicationEnabledSetting(PACKAGE_DOWNLOAD_MANAGER_UI);
+        return this.isDisabledState(state);
+    }
+
+    @Override
     public boolean isDownloadManagerActivated() {
         return !this.isDownloadManagerDeactivated(mContext);
     }
 
-    public boolean isDownloadManagerDeactivated(Context context){
-        int state = context.getPackageManager().getApplicationEnabledSetting("com.android.providers.downloads");
+    @Override
+    public boolean isDownloadManagerDeactivated(Context context) {
+        int state = context.getPackageManager().getApplicationEnabledSetting(PACKAGE_DOWNLOAD_MANAGER);
+        return this.isDisabledState(state);
+    }
 
+    private boolean isDisabledState(int state) {
         return state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED ||
                 state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER ||
                 state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_UNTIL_USED;
