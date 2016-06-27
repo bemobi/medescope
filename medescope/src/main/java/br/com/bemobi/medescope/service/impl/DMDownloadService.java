@@ -113,7 +113,7 @@ public class DMDownloadService implements DownloadService {
             int state = mContext.getPackageManager().getApplicationEnabledSetting(PACKAGE_DOWNLOAD_MANAGER_UI);
             return this.isDisabledState(state);
         } catch (IllegalArgumentException e) {
-            return false;
+            return true;
         }
     }
 
@@ -128,7 +128,7 @@ public class DMDownloadService implements DownloadService {
             int state = context.getPackageManager().getApplicationEnabledSetting(PACKAGE_DOWNLOAD_MANAGER);
             return this.isDisabledState(state);
         } catch (IllegalArgumentException e) {
-            return false;
+            return true;
         }
     }
 
