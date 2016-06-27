@@ -109,8 +109,12 @@ public class DMDownloadService implements DownloadService {
 
     @Override
     public boolean isDownloadManagerUiDeactivated(){
-        int state = mContext.getPackageManager().getApplicationEnabledSetting(PACKAGE_DOWNLOAD_MANAGER_UI);
-        return this.isDisabledState(state);
+        try {
+            int state = mContext.getPackageManager().getApplicationEnabledSetting(PACKAGE_DOWNLOAD_MANAGER_UI);
+            return this.isDisabledState(state);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     @Override
@@ -120,8 +124,12 @@ public class DMDownloadService implements DownloadService {
 
     @Override
     public boolean isDownloadManagerDeactivated(Context context) {
-        int state = context.getPackageManager().getApplicationEnabledSetting(PACKAGE_DOWNLOAD_MANAGER);
-        return this.isDisabledState(state);
+        try {
+            int state = context.getPackageManager().getApplicationEnabledSetting(PACKAGE_DOWNLOAD_MANAGER);
+            return this.isDisabledState(state);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     private boolean isDisabledState(int state) {
