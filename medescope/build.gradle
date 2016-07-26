@@ -2,14 +2,14 @@ apply plugin: 'com.android.library'
 apply from: 'maven.gradle'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
-
     def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion rootProject.ext.androidCompileSdkVersion
+    buildToolsVersion "$rootProject.ext.androidBuildToolsVersion"
 
     defaultConfig {
         minSdkVersion 10
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode globalConfiguration.getAt("androidVersionCode")
         versionName globalConfiguration.getAt("androidVersionName")
     }
@@ -23,8 +23,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile ('com.android.support:appcompat-v7:23.0.1'){
+    compile ("com.android.support:appcompat-v7:$rootProject.ext.androidSupportVersion"){
         exclude module:'com.android.support:support-v4'
     }
     compile 'com.google.code.gson:gson:2.4'

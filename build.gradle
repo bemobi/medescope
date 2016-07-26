@@ -22,6 +22,10 @@ allprojects {
     }
 
     ext {
+        androidCompileSdkVersion = 24
+        androidBuildToolsVersion = '24.0.1'
+        androidSupportVersion = '24.1.0'
+
         androidVersionCode = Integer.parseInt(VERSION_CODE)
         androidVersionName = VERSION_NAME
     }

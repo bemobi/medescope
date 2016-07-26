@@ -53,7 +53,7 @@ public class BemobiDownloadReceiver extends BroadcastReceiver {
                 }
             } else if (Medescope.ACTION_BROADCAST_FINISH_WITH_ERROR.equals(action)) {
                 String downloadId = intent.getStringExtra(DownloadConstants.EXTRA_STRING_DOWNLOAD_ID);
-                String errorMsg = intent.getStringExtra(DownloadConstants.EXTRA_INT_ERROR_REASON);
+                int errorMsg = intent.getIntExtra(DownloadConstants.EXTRA_INT_ERROR_REASON, -1);
 
                 if (!TextUtils.isEmpty(downloadId)) {
                     String data = intent.getStringExtra(DownloadConstants.EXTRA_STRING_JSON_DATA);

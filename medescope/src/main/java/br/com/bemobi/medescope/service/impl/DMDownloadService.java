@@ -2,10 +2,8 @@ package br.com.bemobi.medescope.service.impl;
 
 import android.app.DownloadManager;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -83,16 +81,11 @@ public class DMDownloadService implements DownloadService {
             if (customHeaders != null && !customHeaders.isEmpty()) {
                 // TODO setar variavel no build para logar somente em debug http://toastdroid.com/2014/03/28/customizing-your-build-with-gradle/
 
-                //LogUtil.debug(TAG, LOG_FEATURE_DOWNLOAD, ">>>>>>>>>>> LOGGING CUSTOM HEADERS");
-                //new MapLogger(LOG_FEATURE_DOWNLOAD).log(customHeaders);
-
-
                 for (String key : customHeaders.keySet()) {
                     request.addRequestHeader(key, customHeaders.get(key));
                 }
             }
 
-//        request.allowScanningByMediaScanner();
             request = setHiddenDownload(request);
             Long dmId = getDMInstance(mContext).enqueue(request);
             repository.persistIds(downloadId, dmId);
@@ -190,9 +183,6 @@ public class DMDownloadService implements DownloadService {
                 int progress = 0;
 
                 if (cursor.moveToFirst()) {
-                    // TODO desligar esse log em producao
-                    Logger.debug(TAG, LOG_FEATURE_DOWNLOAD, "dumpCursorToString\n" + DatabaseUtils.dumpCursorToString(cursor));
-
 
                     //column for status
                     int columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
@@ -204,21 +194,16 @@ public class DMDownloadService implements DownloadService {
 
                     //get the download filename
                     filename = "";
-                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                        int filenameIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME);
-                        filename = cursor.getString(filenameIndex);
-                    } else {
-                        int filenameIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
-                        String cursorString = cursor.getString(filenameIndex);
+                    int filenameIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
+                    String cursorString = cursor.getString(filenameIndex);
 
-                        if (cursorString != null) {
-                            Logger.debug(TAG, LOG_FEATURE_DOWNLOAD, "                     [ cursor.getString(filenameIndex) ] = " + cursor.getString(filenameIndex));
-                            Uri uri = Uri.parse(cursorString);
+                    if (cursorString != null) {
+                        Logger.debug(TAG, LOG_FEATURE_DOWNLOAD, "                     [ cursor.getString(filenameIndex) ] = " + cursor.getString(filenameIndex));
+                        Uri uri = Uri.parse(cursorString);
 
-                            if (uri != null) {
-                                Logger.debug(TAG, LOG_FEATURE_DOWNLOAD, "[ Uri.parse(cursor.getString(filenameIndex)).getPath() ] = " + Uri.parse(cursor.getString(filenameIndex)).getPath());
-                                filename = uri.getPath();
-                            }
+                        if (uri != null) {
+                            Logger.debug(TAG, LOG_FEATURE_DOWNLOAD, "[ Uri.parse(cursor.getString(filenameIndex)).getPath() ] = " + Uri.parse(cursor.getString(filenameIndex)).getPath());
+                            filename = uri.getPath();
                         }
                     }
 
