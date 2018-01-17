@@ -5,7 +5,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -15,6 +17,7 @@ import android.os.Process;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 
+import br.com.bemobi.medescope.compat.ContextCompat;
 import br.com.bemobi.medescope.constant.DownloadConstants;
 import br.com.bemobi.medescope.constant.DownloadInfoReasonConstants;
 import br.com.bemobi.medescope.constant.Extras;
@@ -64,27 +67,29 @@ public class DownloadCommandService extends Service implements DownloadCommand {
         Intent serviceIntent = new Intent(context, DownloadCommandService.class);
         serviceIntent.setAction(ACTION_ENQUEUE);
         serviceIntent.putExtra(Extras.EXTRA_DOWNLOAD, downloadRequest);
-        context.startService(serviceIntent);
+
+        ContextCompat.startService(context, serviceIntent);
+
     }
 
     public static void actionSubscribeStatusUpdate(Context context, String id) {
         Intent serviceIntent = new Intent(context, DownloadCommandService.class);
         serviceIntent.setAction(ACTION_REGISTER_FOR_STATUS);
         serviceIntent.putExtra(DownloadConstants.EXTRA_STRING_DOWNLOAD_ID, id);
-        context.startService(serviceIntent);
+        ContextCompat.startService(context, serviceIntent);
     }
 
     public static void actionUnsubscribeStatusUpdate(Context context) {
         Intent serviceIntent = new Intent(context, DownloadCommandService.class);
         serviceIntent.setAction(ACTION_UNREGISTER_FOR_STATUS);
-        context.startService(serviceIntent);
+        ContextCompat.startService(context, serviceIntent);
     }
 
     public static void actionCancel(Context context, String id) {
         Intent serviceIntent = new Intent(context, DownloadCommandService.class);
         serviceIntent.setAction(ACTION_CANCEL);
         serviceIntent.putExtra(DownloadConstants.EXTRA_STRING_DOWNLOAD_ID, id);
-        context.startService(serviceIntent);
+        ContextCompat.startService(context, serviceIntent);
     }
 
     public static void actionFinishDownload(Context context, String downloadId, DownloadInfo downloadInfo) {
@@ -92,14 +97,14 @@ public class DownloadCommandService extends Service implements DownloadCommand {
         serviceIntent.setAction(ACTION_FINISH);
         serviceIntent.putExtra(DownloadConstants.EXTRA_STRING_DOWNLOAD_ID, downloadId);
         serviceIntent.putExtra(DownloadConstants.EXTRA_DOWNLOAD_INFO, downloadInfo);
-        context.startService(serviceIntent);
+        ContextCompat.startService(context, serviceIntent);
     }
 
     public static void actionNotificationClicked(Context context, String[] downloadIds) {
         Intent serviceIntent = new Intent(context, DownloadCommandService.class);
         serviceIntent.setAction(ACTION_NOTIFICATION_CLICK);
         serviceIntent.putExtra(DownloadConstants.EXTRA_ARRAY_STRING_DOWNLOAD_IDS, downloadIds);
-        context.startService(serviceIntent);
+        ContextCompat.startService(context, serviceIntent);
     }
 
     @Override
@@ -135,6 +140,7 @@ public class DownloadCommandService extends Service implements DownloadCommand {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Debug.waitForDebugger();
         Logger.debug(TAG, LOG_FEATURE_SERVICE_LIFECYCLE, "onStartCommand()");
         if (intent != null) {
             executeCommand(intent.getAction(), intent.getExtras());
@@ -220,6 +226,7 @@ public class DownloadCommandService extends Service implements DownloadCommand {
         downloadDataRepository.putDownloadData(downloadRequest.getId(), downloadRequest.getClientPayload());
 
         if(!hasPermission()){
+
             communicationService
                     .sendFinishWithErrorBroadcastData(
                             downloadRequest.getId(),

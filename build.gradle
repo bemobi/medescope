@@ -9,9 +9,9 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:3.0.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
-        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:2.2.3'
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.4.0'
     }
 }
 
@@ -36,5 +36,13 @@ allprojects {
 
         androidVersionCode = Integer.parseInt(VERSION_CODE)
         androidVersionName = VERSION_NAME
+    }
+}
+
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
     }
 }

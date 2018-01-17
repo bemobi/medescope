@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import br.com.bemobi.medescope.compat.ContextCompat;
 import br.com.bemobi.medescope.model.DownloadInfo;
 import br.com.bemobi.medescope.repository.DMRepository;
 import br.com.bemobi.medescope.service.DownloadService;
@@ -27,7 +28,7 @@ public class DMIntentService extends IntentService {
         Intent intent = new Intent(context, DMIntentService.class);
         intent.setAction(ACTION_DM_FINISH);
         intent.putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, downloadId);
-        context.startService(intent);
+        ContextCompat.startService(context, intent);
     }
 
     public static void actionNotificationClicked(Context context, long[] downloadIds) {
@@ -36,7 +37,7 @@ public class DMIntentService extends IntentService {
         if (downloadIds != null) {
             serviceIntent.putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, downloadIds);
         }
-        context.startService(serviceIntent);
+        ContextCompat.startService(context, serviceIntent);
     }
 
     @Override

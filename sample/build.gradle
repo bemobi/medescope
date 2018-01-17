@@ -25,7 +25,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$rootProject.ext.androidSupportVersion"
     compile "com.android.support:support-v4:$rootProject.ext.androidSupportVersion"
     compile 'com.facebook.stetho:stetho:1.1.1'
-    compile 'com.github.halysongoncalves:pugnotification:1.7.0'
+    compile 'com.github.halysongoncalves:pugnotification:1.8.1'
     compile project(':medescope')
     //compile 'br.com.bemobi:medescope:1.1.2-SNAPSHOT@aar'
     compile 'com.google.code.gson:gson:2.4'
