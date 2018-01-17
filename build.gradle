@@ -3,6 +3,10 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.2'
@@ -19,12 +23,16 @@ allprojects {
             url "https://oss.sonatype.org/content/repositories/snapshots"
         }
 
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 
     ext {
-        androidCompileSdkVersion = 24
-        androidBuildToolsVersion = '24.0.1'
-        androidSupportVersion = '24.1.0'
+        androidCompileSdkVersion = 27
+        androidBuildToolsVersion = '27.0.3'
+        androidSupportVersion = '27.0.2'
 
         androidVersionCode = Integer.parseInt(VERSION_CODE)
         androidVersionName = VERSION_NAME
