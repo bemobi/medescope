@@ -1,7 +1,7 @@
 package br.com.bemobi.medescope.sample;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.bemobi.medescope.Medescope;
-import br.com.bemobi.medescope.sample.model.NotificationData;
 import br.com.bemobi.medescope.callback.DownloadStatusCallback;
 import br.com.bemobi.medescope.exception.DirectoryNotMountedException;
 import br.com.bemobi.medescope.exception.PathNotFoundException;
+import br.com.bemobi.medescope.sample.model.NotificationData;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String FILE_PATH = "FILE.zip";
