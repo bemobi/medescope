@@ -140,7 +140,6 @@ public class DownloadCommandService extends Service implements DownloadCommand {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Debug.waitForDebugger();
         Logger.debug(TAG, LOG_FEATURE_SERVICE_LIFECYCLE, "onStartCommand()");
         if (intent != null) {
             executeCommand(intent.getAction(), intent.getExtras());
