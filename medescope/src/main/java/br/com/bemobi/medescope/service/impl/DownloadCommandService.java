@@ -1,36 +1,30 @@
 package br.com.bemobi.medescope.service.impl;
 
 import android.Manifest;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 
-import br.com.bemobi.medescope.compat.ContextCompat;
 import br.com.bemobi.medescope.constant.DownloadConstants;
 import br.com.bemobi.medescope.constant.DownloadInfoReasonConstants;
 import br.com.bemobi.medescope.constant.Extras;
 import br.com.bemobi.medescope.log.IntentLogger;
 import br.com.bemobi.medescope.log.Logger;
-import br.com.bemobi.medescope.model.DownloadRequest;
 import br.com.bemobi.medescope.model.DownloadInfo;
+import br.com.bemobi.medescope.model.DownloadRequest;
 import br.com.bemobi.medescope.repository.DownloadDataRepository;
 import br.com.bemobi.medescope.repository.impl.MapDownloadDataRepository;
 import br.com.bemobi.medescope.service.CommunicationService;
 import br.com.bemobi.medescope.service.DownloadCommand;
 import br.com.bemobi.medescope.service.DownloadService;
-
 
 import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_DOWNLOAD;
 import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_SERVICE_LIFECYCLE;
@@ -38,7 +32,7 @@ import static br.com.bemobi.medescope.constant.DownloadConstants.LOG_FEATURE_SER
 /**
  * Created by bkosawa on 26/06/15.
  */
-public class DownloadCommandService extends Service implements DownloadCommand {
+public class DownloadCommandService implements DownloadCommand, Runnable {
 
     private static final String TAG = DownloadCommandService.class.getSimpleName();
 
@@ -63,33 +57,42 @@ public class DownloadCommandService extends Service implements DownloadCommand {
 
     private boolean isStartedSendProgress = false;
 
+    private Intent sIntent;
+    private Context mContext;
+
+    public DownloadCommandService(Intent intent, Context mContext) {
+        this.sIntent = intent;
+        this.mContext = mContext;
+
+        initThreadHandler();
+        startCommand();
+    }
+
     public static void actionEnqueue(Context context, DownloadRequest downloadRequest) {
         Intent serviceIntent = new Intent(context, DownloadCommandService.class);
         serviceIntent.setAction(ACTION_ENQUEUE);
         serviceIntent.putExtra(Extras.EXTRA_DOWNLOAD, downloadRequest);
-
-        ContextCompat.startService(context, serviceIntent);
-
+        new Thread(new DownloadCommandService(serviceIntent, context)).start();
     }
 
     public static void actionSubscribeStatusUpdate(Context context, String id) {
         Intent serviceIntent = new Intent(context, DownloadCommandService.class);
         serviceIntent.setAction(ACTION_REGISTER_FOR_STATUS);
         serviceIntent.putExtra(DownloadConstants.EXTRA_STRING_DOWNLOAD_ID, id);
-        ContextCompat.startService(context, serviceIntent);
+        new Thread(new DownloadCommandService(serviceIntent, context)).start();
     }
 
     public static void actionUnsubscribeStatusUpdate(Context context) {
         Intent serviceIntent = new Intent(context, DownloadCommandService.class);
         serviceIntent.setAction(ACTION_UNREGISTER_FOR_STATUS);
-        ContextCompat.startService(context, serviceIntent);
+        new Thread(new DownloadCommandService(serviceIntent, context)).start();
     }
 
     public static void actionCancel(Context context, String id) {
         Intent serviceIntent = new Intent(context, DownloadCommandService.class);
         serviceIntent.setAction(ACTION_CANCEL);
         serviceIntent.putExtra(DownloadConstants.EXTRA_STRING_DOWNLOAD_ID, id);
-        ContextCompat.startService(context, serviceIntent);
+        new Thread(new DownloadCommandService(serviceIntent, context)).start();
     }
 
     public static void actionFinishDownload(Context context, String downloadId, DownloadInfo downloadInfo) {
@@ -97,28 +100,27 @@ public class DownloadCommandService extends Service implements DownloadCommand {
         serviceIntent.setAction(ACTION_FINISH);
         serviceIntent.putExtra(DownloadConstants.EXTRA_STRING_DOWNLOAD_ID, downloadId);
         serviceIntent.putExtra(DownloadConstants.EXTRA_DOWNLOAD_INFO, downloadInfo);
-        ContextCompat.startService(context, serviceIntent);
+        new Thread(new DownloadCommandService(serviceIntent, context)).start();
     }
 
     public static void actionNotificationClicked(Context context, String[] downloadIds) {
         Intent serviceIntent = new Intent(context, DownloadCommandService.class);
         serviceIntent.setAction(ACTION_NOTIFICATION_CLICK);
         serviceIntent.putExtra(DownloadConstants.EXTRA_ARRAY_STRING_DOWNLOAD_IDS, downloadIds);
-        ContextCompat.startService(context, serviceIntent);
+        new Thread(new DownloadCommandService(serviceIntent, context)).start();
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        Logger.debug(TAG, LOG_FEATURE_SERVICE_LIFECYCLE, "onBind()");
-        return null;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Logger.debug(TAG, LOG_FEATURE_SERVICE_LIFECYCLE, "onCreate()");
-        initThreadHandler();
-        startCommand();
+    public void run() {
+        Logger.debug(TAG, LOG_FEATURE_SERVICE_LIFECYCLE, "onStartCommand()");
+        if (sIntent != null) {
+            executeCommand(sIntent.getAction(), sIntent.getExtras());
+        } else {
+            startCommand();
+            if( !TextUtils.isEmpty(this.downloadIdRegisteredToSendProgress )) {
+                startProgressSender();
+            }
+        }
     }
 
     private void initThreadHandler() {
@@ -131,25 +133,11 @@ public class DownloadCommandService extends Service implements DownloadCommand {
     @Override
     public void startCommand() {
         Logger.debug(TAG, LOG_FEATURE_SERVICE_LIFECYCLE, "startCommand()");
-        this.downloadDataRepository = MapDownloadDataRepository.getInstance(getApplicationContext());
-        this.downloadService = DMDownloadService.getInstance(getApplicationContext());
-        this.communicationService = BroadcastCommunicationService.getInstance(getApplicationContext());
+        this.downloadDataRepository = MapDownloadDataRepository.getInstance(mContext.getApplicationContext());
+        this.downloadService = DMDownloadService.getInstance(mContext.getApplicationContext());
+        this.communicationService = BroadcastCommunicationService.getInstance(mContext.getApplicationContext());
         this.isStartedSendProgress = false;
         this.downloadIdRegisteredToSendProgress = downloadDataRepository.recoverSubscribedId();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Logger.debug(TAG, LOG_FEATURE_SERVICE_LIFECYCLE, "onStartCommand()");
-        if (intent != null) {
-            executeCommand(intent.getAction(), intent.getExtras());
-        } else {
-            startCommand();
-            if( !TextUtils.isEmpty(this.downloadIdRegisteredToSendProgress )) {
-                startProgressSender();
-            }
-        }
-        return START_STICKY;
     }
 
     @Override
@@ -174,16 +162,8 @@ public class DownloadCommandService extends Service implements DownloadCommand {
         }
 
         if (downloadDataRepository.isEmptyDownloadData() && !isStartedSendProgress) {
-            stopSelf();
             shutdownCommand();
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        Logger.debug(TAG, LOG_FEATURE_SERVICE_LIFECYCLE, "onDestroy()");
-        shutdownCommand();
-        super.onDestroy();
     }
 
     @Override
@@ -259,7 +239,7 @@ public class DownloadCommandService extends Service implements DownloadCommand {
 
     private boolean hasPermission(){
         int permission = ActivityCompat
-                .checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                .checkSelfPermission(mContext.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         if(permission== PackageManager.PERMISSION_GRANTED){
             return true;

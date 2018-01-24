@@ -46,7 +46,7 @@ public class DMDownloadService implements DownloadService {
 
     public static DMDownloadService getInstance(Context context) {
         if(instance == null) {
-            instance = new DMDownloadService(context);
+            instance = new DMDownloadService(context.getApplicationContext());
         }
         return instance;
     }

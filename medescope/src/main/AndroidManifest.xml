@@ -9,12 +9,6 @@
 
     <application android:allowBackup="true">
 
-        <service android:name="br.com.bemobi.medescope.service.impl.DownloadCommandService"
-            android:process=":download"/>
-
-        <service android:name="br.com.bemobi.medescope.service.impl.DMIntentService"
-                 android:process=":download"/>
-
         <receiver
             android:name="br.com.bemobi.medescope.receiver.DMDownloaderReceiver"
             android:exported="true">
