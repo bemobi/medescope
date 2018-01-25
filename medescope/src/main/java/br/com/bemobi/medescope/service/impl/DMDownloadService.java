@@ -46,7 +46,7 @@ public class DMDownloadService implements DownloadService {
 
     public static DMDownloadService getInstance(Context context) {
         if(instance == null) {
-            instance = new DMDownloadService(context);
+            instance = new DMDownloadService(context.getApplicationContext());
         }
         return instance;
     }
@@ -141,11 +141,7 @@ public class DMDownloadService implements DownloadService {
 
     private DownloadManager.Request setHiddenDownload(DownloadManager.Request request){
         if(isHidden) {
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
-            } else {
-                request.setShowRunningNotification(false);
-            }
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
         }
         return request;
     }

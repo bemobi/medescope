@@ -115,7 +115,7 @@ public class Medescope {
     }
 
     public void updateSubscriptionStatusId(Context context, String id){
-        if(mReceiver.isCallbackSet()){
+        if(!mReceiver.isCallbackSet()){
             Logger.error(TAG, "YOU HAVE NOT SET A CALLBACK YET!!");
             Logger.error(TAG, "YOU SHOULD IMPLEMENT A BROADCAST RECEIVER BY YOURSELF");
         }

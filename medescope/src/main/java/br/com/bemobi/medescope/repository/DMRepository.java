@@ -33,7 +33,7 @@ public class DMRepository {
 
     public static DMRepository getInstance(Context context) {
         if(instance == null){
-            instance = new DMRepository(context);
+            instance = new DMRepository(context.getApplicationContext());
         }
         return instance;
     }

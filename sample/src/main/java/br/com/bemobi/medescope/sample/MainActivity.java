@@ -1,7 +1,9 @@
 package br.com.bemobi.medescope.sample;
 
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,19 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.bemobi.medescope.Medescope;
-import br.com.bemobi.medescope.sample.model.NotificationData;
 import br.com.bemobi.medescope.callback.DownloadStatusCallback;
 import br.com.bemobi.medescope.exception.DirectoryNotMountedException;
 import br.com.bemobi.medescope.exception.PathNotFoundException;
+import br.com.bemobi.medescope.sample.model.NotificationData;
+import br.com.bemobi.medescope.sample.service.PermissionService;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String FILE_PATH = "FILE.zip";
 
-    private String FILE_5MB = "http://download.thinkbroadband.com/5MB.zip";
-    private String FILE_10MB = "http://download.thinkbroadband.com/10MB.zip";
+    private String FILE_5MB = "http://speedtest.ftp.otenet.gr/files/test10Mb.db";
+    private String FILE_10MB = "http://speedtest.ftp.otenet.gr/files/test10Mb.db";
     private String FILE_20MB = "http://download.thinkbroadband.com/20MB.zip";
     private String FILE_50MB = "http://download.thinkbroadband.com/50MB.zip";
     private String FILE_100MB = "http://download.thinkbroadband.com/100MB.zip";
@@ -80,6 +83,25 @@ public class MainActivity extends ActionBarActivity {
             }
 
         });
+
+        PermissionService.requestPermissions(this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case PermissionService.MY_PERMISSIONS_REQUEST_WRITE_STORAGE: {
+                if (grantResults.length <= 0 || grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    textStatus.setText("PERMISSION DENIED");
+                    textAction.setText("");
+                    hideProgress();
+                }
+                return;
+            }
+
+        }
     }
 
     private void hideProgress() {
