@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-//apply from: 'maven.gradle'
+apply from: 'maven.gradle'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -34,4 +34,4 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
 }
 
-//uploadArchives.dependsOn(assemble)
+uploadArchives.dependsOn(assemble)
